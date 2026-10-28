@@ -647,9 +647,9 @@
       border-radius: 24px;
       padding: 2.5rem 2.25rem;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 0.95fr 1.05fr;
       gap: 2.5rem;
-      align-items: center;
+      align-items: start;
     }
     .contact-shell h2 {
       font-family: "Instrument Serif", Georgia, serif;
@@ -668,6 +668,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.55rem;
+      margin-top: 1.25rem;
     }
     .c-link {
       display: flex;
@@ -692,6 +693,97 @@
       font-size: 0.8rem;
       color: var(--muted);
       font-family: "JetBrains Mono", monospace;
+    }
+
+    /* Contact form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 0.8rem 0.95rem;
+      border-radius: 12px;
+      border: 1px solid var(--line-strong);
+      background: rgba(0, 0, 0, 0.35);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.92rem;
+      transition: border-color 0.2s, background 0.2s;
+      outline: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: var(--faint);
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--signal-edge);
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .field select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath stroke='%238a8790' stroke-width='1.5' d='m1 1 5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.95rem center;
+      padding-right: 2.2rem;
+    }
+    .field select option {
+      background: #141417;
+      color: var(--ink);
+    }
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+      margin-top: 0.25rem;
+    }
+    .form-status {
+      font-size: 0.84rem;
+      color: var(--muted);
+      min-height: 1.25em;
+    }
+    .form-status.ok { color: var(--signal); }
+    .form-status.err { color: #ff7a7a; }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+      overflow: hidden;
     }
 
     /* Footer */
@@ -825,6 +917,7 @@
     @media (max-width: 640px) {
       .services-grid,
       .approach-rail { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
       .wrap { width: min(100% - 1.5rem, var(--max)); }
       .hero { padding-top: calc(var(--nav) + 3.5rem); }
       .hero-portrait { width: min(100%, 300px); }
@@ -1149,17 +1242,47 @@
           <div>
             <div class="sec-label">Contact</div>
             <h2>Build something that holds up.</h2>
-            <p>Open to freelance inquiries, backend roles, and collaboration. Email works best for project briefs.</p>
-            <div class="hero-actions">
-              <a class="btn btn-signal" href="mailto:omarssalem123@gmail.com">Email Omar</a>
-              <a class="btn btn-ghost" href="https://github.com/omarsalem0" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <p>Have a backend project in mind? Send the details below — I’ll get back to you by email.</p>
+            <div class="contact-links">
+              <a class="c-link" href="mailto:omarssalem123@gmail.com"><strong>Email</strong><span>omarssalem123@gmail.com</span></a>
+              <a class="c-link" href="https://github.com/omarsalem0" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>@omarsalem0</span></a>
+              <a class="c-link" href="https://www.linkedin.com/in/omar-salem-a04831376" target="_blank" rel="noopener noreferrer"><strong>LinkedIn</strong><span>omar-salem-a04831376</span></a>
             </div>
           </div>
-          <div class="contact-links">
-            <a class="c-link" href="mailto:omarssalem123@gmail.com"><strong>Email</strong><span>omarssalem123@gmail.com</span></a>
-            <a class="c-link" href="https://github.com/omarsalem0" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>@omarsalem0</span></a>
-            <a class="c-link" href="https://www.linkedin.com/in/omar-salem-a04831376" target="_blank" rel="noopener noreferrer"><strong>LinkedIn</strong><span>omar-salem-a04831376</span></a>
-          </div>
+
+          <form class="contact-form" id="projectForm" novalidate>
+            <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div class="form-row">
+              <div class="field">
+                <label for="cf-name">Name</label>
+                <input id="cf-name" name="name" type="text" placeholder="Your name" required autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="cf-email">Email</label>
+                <input id="cf-email" name="email" type="email" placeholder="you@company.com" required autocomplete="email" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="cf-type">Project type</label>
+              <select id="cf-type" name="project_type" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="REST API">REST API development</option>
+                <option value="Authentication">Authentication system</option>
+                <option value="Database">Database modeling</option>
+                <option value="Real-time">Real-time / Socket.IO</option>
+                <option value="Full backend">Full backend feature</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cf-message">Project details</label>
+              <textarea id="cf-message" name="message" placeholder="Brief about the project, timeline, and stack if known…" required></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-signal" type="submit" id="cf-submit">Send project request</button>
+              <span class="form-status" id="cf-status" role="status" aria-live="polite"></span>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -1207,6 +1330,68 @@
     document.getElementById('toTop').addEventListener('click', () =>
       window.scrollTo({ top: 0, behavior: 'smooth' })
     );
+
+    /* Web3Forms — project inquiry */
+    const projectForm = document.getElementById('projectForm');
+    const cfSubmit = document.getElementById('cf-submit');
+    const cfStatus = document.getElementById('cf-status');
+    const W3F_KEY = '21102bda-7858-4806-a7dc-8551b2364712';
+
+    if (projectForm) {
+      projectForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        cfStatus.className = 'form-status';
+        cfStatus.textContent = '';
+
+        const name = projectForm.name.value.trim();
+        const email = projectForm.email.value.trim();
+        const projectType = projectForm.project_type.value;
+        const message = projectForm.message.value.trim();
+
+        if (!name || !email || !projectType || !message) {
+          cfStatus.className = 'form-status err';
+          cfStatus.textContent = 'Please fill in all fields.';
+          return;
+        }
+
+        cfSubmit.disabled = true;
+        cfStatus.textContent = 'Sending…';
+
+        try {
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json'
+            },
+            body: JSON.stringify({
+              access_key: W3F_KEY,
+              subject: `Portfolio project request — ${projectType}`,
+              from_name: name,
+              name,
+              email,
+              project_type: projectType,
+              message,
+              botcheck: projectForm.botcheck.checked
+            })
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            cfStatus.className = 'form-status ok';
+            cfStatus.textContent = 'Sent. I’ll reply by email soon.';
+            projectForm.reset();
+          } else {
+            throw new Error(data.message || 'Submit failed');
+          }
+        } catch (err) {
+          cfStatus.className = 'form-status err';
+          cfStatus.textContent = 'Could not send. Try email directly.';
+        } finally {
+          cfSubmit.disabled = false;
+        }
+      });
+    }
 
     const sections = [...document.querySelectorAll('section[id]')];
     const anchors = [...document.querySelectorAll('.nav-links a')];
